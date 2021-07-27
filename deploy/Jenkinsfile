@@ -27,6 +27,14 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', namespace: 'jenkins', serv
           docker push  hub.sx.com/projectdemo/demo:latest
           '''
       }
+      /**
+     stage("Deploy To Kuberates Cluster"){
+       kubernetesDeploy(
+         configs: 'deploy/deploy.yaml', 
+         kubeconfigId: '81ce11c3-20e5-4b05-a4a1-e8d46a9cb8e0',
+         enableConfigSubstitution: true
+        )
+    } **/  
       stage('Deploy to K8S'){
           sh '''
           kubectl apply -f deploy/deploy.yaml

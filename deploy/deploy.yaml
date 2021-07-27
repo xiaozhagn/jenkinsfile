@@ -1,0 +1,45 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: jenkins-np
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: jenkins
+      app: np
+  template:
+    metadata:
+      labels:
+        project: jenkins
+        app: np
+    spec:
+      imagePullSecrets:
+      - name: registry-pull-secret
+      containers:
+      - name: np
+        image: hub.sx.com/projectdemo/demo
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: web
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-np
+  namespace: jenkins
+  labels:
+    project: jenkins
+    app: np
+spec:
+  selector:
+    project: jenkins
+    app: np
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80
+  type: NodePort

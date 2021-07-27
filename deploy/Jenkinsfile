@@ -15,7 +15,11 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', namespace: 'jenkins', serv
 {
   node("jnlp-slave"){
       stage('Git Checkout'){
-         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '1f2e87c4-9eca-43b1-b9d4-f1dbb8f6e490', url: 'ssh://git@172.25.0.31:2222/root/demo.git']]])
+         checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
+                   doGenerateSubmoduleConfigurations: false, 
+                   extensions: [], submoduleCfg: [], 
+                   userRemoteConfigs: [[credentialsId: '1f2e87c4-9eca-43b1-b9d4-f1dbb8f6e490', 
+                   url: 'ssh://git@172.25.0.31:2222/root/demo.git']]])
       }
       stage('Unit Testing'){
       	echo "Unit Testing..."
